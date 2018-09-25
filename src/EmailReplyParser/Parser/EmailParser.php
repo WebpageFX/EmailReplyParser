@@ -25,7 +25,7 @@ class EmailParser
      *
      * @var string
      */
-    private $signatureRegex = '/(?:^\s*--|^\s*__|^-\w|^-- $)|(?:^Sent from my (?:\s*\w+){1,4}$)|(?:^={30,}$)$/s';
+    private $signatureRegex = '/(?:^\s*--|^\s*__|^-\w|^-- |^\[image:\sWebFX\]\s<https:\/\/www\.webfx\.com)|(?:^Sent from my (?:\s*\w+){1,4}$)|(?:^={30,}$)$/s';
 
     /**
      * @var string[]
@@ -67,7 +67,7 @@ class EmailParser
      */
     public function parse($text)
     {
-        $text = str_replace(array("\r\n", "\r"), "\n", $text);
+        $text = str_replace(array("\r\n", "\r", "<br>"), "\n", $text);
 
         foreach ($this->quoteHeadersRegex as $regex) {
             if (preg_match($regex, $text, $matches)) {
